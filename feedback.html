@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Big Best Bites Restaurant - Feedback</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header>
+    <nav>
+      <h1>Big Best Bites Restaurant</h1>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="menu.html">Menu</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a href="feedback.html" class="active">Feedback</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <section id="feedback-section" class="feedback">
+      <h2>We Value Your Feedback</h2>
+ <form id="feedbackForm" action="save_feedback.php" method="POST">
+    <input type="text" name="name" placeholder="Name" required>
+    <input type="email" name="email" placeholder="Email" required>
+    <textarea name="message" placeholder="Feedback" required></textarea>
+    <button type="submit">Submit Feedback</button>
+</form>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy;2025 Big Best Bites Restaurant. All rights reserved.</p>
+  </footer>
+
+  <script>
+document.getElementById('feedbackForm').addEventListener('submit', async function(e) {
+    e.preventDefault(); // Stop the page from redirecting to save_feedback.php
+
+    const formData = new FormData(this);
+
+    try {
+        const response = await fetch('save_feedback.php', {
+            method: 'POST',
+            body: formData
+        });
+
+        const result = await response.json();
+
+        if (result.success) {
+            alert(result.message); // Displays "Thank you for your feedback!" pop-up
+            this.reset(); // Clears input fields after submission
+        } else {
+            alert("Error: " + result.message);
+        }
+    } catch (error) {
+        alert("An error occurred while submitting your feedback.");
+    }
+});
+</script>
+</body>
+</html>
